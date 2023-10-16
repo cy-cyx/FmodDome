@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/selectBn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择音频" />
+
+        <TextView
+            android:id="@+id/resTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择一个音频文件" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/controlBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="播放" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="音效：" />
+
+    <Button
+        android:id="@+id/luoliBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="萝莉声音" />
+
+    <Button
+        android:id="@+id/dashuBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="大叔声音" />
+
+    <Button
+        android:id="@+id/jinsongBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="惊悚声音" />
+
+    <Button
+        android:id="@+id/gaoguaiBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="搞怪声音" />
+
+    <Button
+        android:id="@+id/konglingBn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="空灵声音" />
+
+</LinearLayout>

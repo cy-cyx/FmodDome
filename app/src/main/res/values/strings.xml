@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Fmod</string>
+    <string name="permission_refuse_tip">Please go to the settings page to open the relevant permissions</string>
+    <string name="goto_set">Go To Set</string>
+</resources>
