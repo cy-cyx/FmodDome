@@ -2,6 +2,8 @@
 #include <string>
 #include "FmodTask.h"
 #include "FmodEffects.h"
+#include "Log.h"
+#include "fmod/fmod_errors.h"
 
 jlong _playSound(JNIEnv *env, jobject thiz, jstring rec, jint mode) {
     auto *task = new FMODCORE::FmodTask();
@@ -19,6 +21,7 @@ jlong _playSound(JNIEnv *env, jobject thiz, jstring rec, jint mode) {
 
         FMOD::Channel *channel;
         system->playSound(sound, 0, false, &channel);
+        task->channel = channel;
 
         // 添加效果
         FMODCORE::setEffect(task->system, task->channel, mode);

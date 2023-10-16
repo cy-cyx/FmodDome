@@ -1,30 +1,34 @@
 package com.fmodcore
 
+import org.fmod.FMOD
+
 class FmodCore {
-    private val p: Long = -1
-    private var init = false
+    private var p: Long = -1
     private var play = false
 
     fun initAndPlay(rec: String, mode: Int) {
-        if (init) {
+        if (p != -1L) {
             release(p)
         }
-        init = true
-        playSound(rec, mode)
+        p = playSound(rec, mode)
         play = true
     }
 
     fun pause() {
+        if (p == -1L) return
         pauseSound(p)
         play = false
     }
 
     fun replay() {
+        if (p == -1L) return
         replaySound(p)
     }
 
     fun release() {
+        if (p == -1L) return
         release(p)
+        p = -1L
     }
 
     /*native*/
@@ -35,6 +39,8 @@ class FmodCore {
 
     companion object {
         init {
+            System.loadLibrary("fmodL");
+            System.loadLibrary("fmod");
             System.loadLibrary("fmodcore")
         }
     }

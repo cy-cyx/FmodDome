@@ -19,6 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private var fmodCore = FmodCore()
+    private var mode = EffectMode.NORMAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +49,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
 
         }
-        viewBinding.controlBn.noDoubleClick {
-            fmodCore.initAndPlay(path, EffectMode.JINGSONG.mode)
+        viewBinding.initAndStartBn.noDoubleClick {
+            fmodCore.initAndPlay(path, mode.mode)
+        }
+
+        viewBinding.pauseBn.noDoubleClick {
+            fmodCore.pause()
+        }
+
+        viewBinding.playBn.noDoubleClick {
+            fmodCore.replay()
         }
 
         viewBinding.luoliBn.noDoubleClick {
-
+            viewBinding.modeTv.text = EffectMode.LUOLI.title
+            mode = EffectMode.LUOLI
         }
         viewBinding.dashuBn.noDoubleClick {
-
+            viewBinding.modeTv.text = EffectMode.DASHU.title
+            mode = EffectMode.DASHU
         }
         viewBinding.jinsongBn.noDoubleClick {
-
+            viewBinding.modeTv.text = EffectMode.JINGSONG.title
+            mode = EffectMode.JINGSONG
         }
         viewBinding.gaoguaiBn.noDoubleClick {
-
+            viewBinding.modeTv.text = EffectMode.GAOGUAI.title
+            mode = EffectMode.GAOGUAI
         }
         viewBinding.konglingBn.noDoubleClick {
-
+            viewBinding.modeTv.text = EffectMode.KONGLING.title
+            mode = EffectMode.KONGLING
         }
     }
 
@@ -76,5 +90,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             path = it
             viewBinding.resTv.text = it
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        fmodCore.release()
     }
 }

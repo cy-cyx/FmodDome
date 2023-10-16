@@ -22,13 +22,31 @@
             android:text="选择一个音频文件" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/controlBn"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="播放" />
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/initAndStartBn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="重加载并播放" />
+
+        <Button
+            android:id="@+id/pauseBn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停" />
+
+        <Button
+            android:id="@+id/playBn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停后的播放" />
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/modeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="音效：" />
