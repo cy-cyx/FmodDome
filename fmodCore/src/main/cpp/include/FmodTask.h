@@ -9,14 +9,22 @@ namespace FMODCORE {
     class FmodTask {
 
     public:
+        jobject object;
+        bool isPlay;
+        bool isRelease;
+
         FMOD::System *system;
-        FMOD::Sound *sound;
         FMOD::Channel *channel;
+
+        // 当前播放的声道（如果有附加资源可以通过它来判断结束）
+        FMOD::Sound *sound;
 
         FmodTask() {
             system = nullptr;
             sound = nullptr;
             channel = nullptr;
+            isRelease = false;
+            isPlay = false;
         }
     };
 

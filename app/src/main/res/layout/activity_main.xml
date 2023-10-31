@@ -37,12 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="暂停" />
-
-        <Button
-            android:id="@+id/playBn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停后的播放" />
     </LinearLayout>
 
     <TextView

@@ -10,7 +10,7 @@ import com.fmod.units.PermissionUtil
 import com.fmod.units.SystemSoundUtil
 import com.fmod.units.noDoubleClick
 import com.fmodcore.EffectMode
-import com.fmodcore.FmodCore
+import com.fmodcore.FmodPlay
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -18,7 +18,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private var fmodCore = FmodCore()
+    private var fmodPlay = FmodPlay()
     private var mode = EffectMode.NORMAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,16 +50,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         }
         viewBinding.initAndStartBn.noDoubleClick {
-            fmodCore.initAndPlay(path, mode.mode)
+            fmodPlay.play(path, mode.mode)
         }
 
         viewBinding.pauseBn.noDoubleClick {
-            fmodCore.pause()
+            fmodPlay.stop()
         }
 
-        viewBinding.playBn.noDoubleClick {
-            fmodCore.replay()
-        }
 
         viewBinding.luoliBn.noDoubleClick {
             viewBinding.modeTv.text = EffectMode.LUOLI.title
@@ -94,6 +91,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        fmodCore.release()
+        fmodPlay.release()
     }
 }
