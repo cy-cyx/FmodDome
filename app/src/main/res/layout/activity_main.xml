@@ -22,57 +22,10 @@
             android:text="选择一个音频文件" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/initAndStartBn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重加载并播放" />
-
-        <Button
-            android:id="@+id/pauseBn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/modeTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="音效：" />
-
     <Button
-        android:id="@+id/luoliBn"
+        android:id="@+id/gotoAddDsp"
+        android:text="去变声"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="萝莉声音" />
-
-    <Button
-        android:id="@+id/dashuBn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="大叔声音" />
-
-    <Button
-        android:id="@+id/jinsongBn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="惊悚声音" />
-
-    <Button
-        android:id="@+id/gaoguaiBn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="搞怪声音" />
-
-    <Button
-        android:id="@+id/konglingBn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="空灵声音" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

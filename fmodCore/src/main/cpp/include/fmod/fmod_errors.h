@@ -54,7 +54,7 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_INVALID_HANDLE:            return "An invalid object handle was used.";
         case FMOD_ERR_INVALID_PARAM:             return "An invalid parameter was passed to this function.";
         case FMOD_ERR_INVALID_POSITION:          return "An invalid seek position was passed to this function.";
-        case FMOD_ERR_INVALID_SPEAKER:           return "An invalid speaker was passed to this function based on the current speaker mode.";
+        case FMOD_ERR_INVALID_SPEAKER:           return "An invalid speaker was passed to this function based on the current speaker dspMode.";
         case FMOD_ERR_INVALID_SYNCPOINT:         return "The syncpoint did not come from this sound handle.";
         case FMOD_ERR_INVALID_THREAD:            return "Tried to call a function on a thread that is not supported.";
         case FMOD_ERR_INVALID_VECTOR:            return "The vectors passed in are not unit length, or perpendicular.";
@@ -73,7 +73,7 @@ static const char *FMOD_ErrorString(FMOD_RESULT errcode)
         case FMOD_ERR_OUTPUT_DRIVERCALL:         return "A call to a standard soundcard driver failed, which could possibly mean a bug in the driver or resources were missing or exhausted.";
         case FMOD_ERR_OUTPUT_FORMAT:             return "Soundcard does not support the specified format.";
         case FMOD_ERR_OUTPUT_INIT:               return "Error initializing output device.";
-        case FMOD_ERR_OUTPUT_NODRIVERS:          return "The output device has no drivers installed.  If pre-init, FMOD_OUTPUT_NOSOUND is selected as the output mode.  If post-init, the function just fails.";
+        case FMOD_ERR_OUTPUT_NODRIVERS:          return "The output device has no drivers installed.  If pre-init, FMOD_OUTPUT_NOSOUND is selected as the output dspMode.  If post-init, the function just fails.";
         case FMOD_ERR_PLUGIN:                    return "An unspecified error has been returned from a plugin.";
         case FMOD_ERR_PLUGIN_MISSING:            return "A requested output, dsp unit type or codec was not available.";
         case FMOD_ERR_PLUGIN_RESOURCE:           return "A resource that the plugin requires cannot be allocated or found. (ie the DLS file for MIDI playback)";

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import com.fmod.base.BaseActivity
 import com.fmod.databinding.ActivityMainBinding
+import com.fmod.effect.EffectActivity
 import com.fmod.units.PermissionUtil
 import com.fmod.units.SystemSoundUtil
 import com.fmod.units.noDoubleClick
@@ -17,9 +18,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initViewBinding(layoutInflater: LayoutInflater): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
-
-    private var fmodPlay = FmodPlay()
-    private var mode = EffectMode.NORMAL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,36 +45,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         }
                     })
             }
-
-        }
-        viewBinding.initAndStartBn.noDoubleClick {
-            fmodPlay.play(path, mode.mode)
         }
 
-        viewBinding.pauseBn.noDoubleClick {
-            fmodPlay.stop()
-        }
-
-
-        viewBinding.luoliBn.noDoubleClick {
-            viewBinding.modeTv.text = EffectMode.LUOLI.title
-            mode = EffectMode.LUOLI
-        }
-        viewBinding.dashuBn.noDoubleClick {
-            viewBinding.modeTv.text = EffectMode.DASHU.title
-            mode = EffectMode.DASHU
-        }
-        viewBinding.jinsongBn.noDoubleClick {
-            viewBinding.modeTv.text = EffectMode.JINGSONG.title
-            mode = EffectMode.JINGSONG
-        }
-        viewBinding.gaoguaiBn.noDoubleClick {
-            viewBinding.modeTv.text = EffectMode.GAOGUAI.title
-            mode = EffectMode.GAOGUAI
-        }
-        viewBinding.konglingBn.noDoubleClick {
-            viewBinding.modeTv.text = EffectMode.KONGLING.title
-            mode = EffectMode.KONGLING
+        viewBinding.gotoAddDsp.noDoubleClick {
+            EffectActivity.start(this, path)
         }
     }
 
@@ -85,12 +57,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     fun openSoundFile() {
         SystemSoundUtil.openSysTemSoundFile(this@MainActivity) {
             path = it
-            viewBinding.resTv.text = it
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        fmodPlay.release()
     }
 }

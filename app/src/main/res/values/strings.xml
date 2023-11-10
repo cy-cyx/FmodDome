@@ -2,4 +2,23 @@
     <string name="app_name">Fmod</string>
     <string name="permission_refuse_tip">Please go to the settings page to open the relevant permissions</string>
     <string name="goto_set">Go To Set</string>
+
+    <string name="normal">Normal</string>
+    <string name="girl">Girl</string>
+    <string name="man">Man</string>
+    <string name="ghost">Ghost</string>
+    <string name="alien">Alien</string>
+    <string name="echo">Echo</string>
+    <string name="zombie">Zombie</string>
+    <string name="fan">Fan</string>
+    <string name="karaoke">Karaoke</string>
+    <string name="bass_booster">Bass Booster</string>
+    <string name="robot">Robot</string>
+    <string name="underwater">Under Water</string>
+    <string name="dark">Dark</string>
+    <string name="chipmunk">Chipmunk</string>
+    <string name="lion">Lion</string>
+    <string name="old_radio">Old Radio</string>
+    <string name="voice_effect">Voice Effect</string>
+    <string name="change_voice">Change voice</string>
 </resources>

@@ -2,7 +2,6 @@ package com.fmod.units
 
 object MMKVKeys {
     const val keyFirstCheckPermission = "keyFirstCheckPermission"
-    const val keyFirstUser = "keyFirstUser"
 }
 
 fun String.getMMKVBool(default: Boolean = false) = MMKVUtil.getBool(this, default)

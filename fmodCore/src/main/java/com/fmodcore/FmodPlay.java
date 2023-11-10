@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 public class FmodPlay {
 
     static {
-        System.loadLibrary("fmodL");
         System.loadLibrary("fmod");
+        System.loadLibrary("fmodL");
         System.loadLibrary("fmodcore");
     }
 
@@ -32,26 +32,51 @@ public class FmodPlay {
     }
 
     /**
-     * 从头播放使用指定效果播放一段音频
+     * 加载资源
      *
-     * @param res  本地音频文件
-     * @param mode 效果
+     * @param res
      */
-    public void play(String res, int mode) {
+    public void setSoundRes(String res) {
         if (isRelease) return;
         Message message = Message.obtain();
-        message.what = sCodePlay;
+        message.what = sCodeSetRes;
         message.obj = res;
+        playHandler.sendMessage(message);
+    }
+
+    /**
+     * 设置dsp
+     *
+     * @param mode
+     */
+    public void setEffect(int mode) {
+        if (isRelease) return;
+        Message message = Message.obtain();
+        message.what = sCodeSetEffect;
         message.arg1 = mode;
         playHandler.sendMessage(message);
     }
 
     /**
-     * 停止当前音频播放
+     * 播放
      */
-    public void stop() {
+    public void play() {
         if (isRelease) return;
-        playHandler.sendEmptyMessage(sCodeStop);
+        Message message = Message.obtain();
+        message.what = sCodePlay;
+        playHandler.sendMessage(message);
+    }
+
+    /**
+     * 暂停当前音频播放
+     */
+    public void pause() {
+        if (isRelease) return;
+        playHandler.sendEmptyMessage(sCodePause);
+    }
+
+    public boolean isPlay() {
+        return playing;
     }
 
     private boolean isRelease = false;
@@ -63,10 +88,12 @@ public class FmodPlay {
     }
 
     private final int sCodeInit = 0;
-    private final int sCodePlay = 1;
-    private final int sCodeStop = 2;
-    private final int sCodeStopCallback = 3;
-    private final int sCodeRelease = 4;
+    private final int sCodeSetRes = 1;
+    private final int sCodeSetEffect = 2;
+    private final int sCodePlay = 3;
+    private final int sCodePause = 4;
+    private final int sCodeFinishCallback = 5;
+    private final int sCodeRelease = 6;
 
     class PlayHandler extends Handler {
 
@@ -81,15 +108,23 @@ public class FmodPlay {
                     _init();
                     break;
                 }
+                case sCodeSetRes: {
+                    _setSoundResource((String) msg.obj);
+                    break;
+                }
+                case sCodeSetEffect: {
+                    _setEffect(msg.arg1);
+                    break;
+                }
                 case sCodePlay: {
-                    _play((String) msg.obj, msg.arg1);
+                    _play();
                     break;
                 }
-                case sCodeStop: {
-                    _stop();
+                case sCodePause: {
+                    _pause();
                     break;
                 }
-                case sCodeStopCallback: {
+                case sCodeFinishCallback: {
                     _stopByCallback();
                     break;
                 }
@@ -106,24 +141,32 @@ public class FmodPlay {
     private boolean playing = false;
 
     private void _init() {
-        pot = initNatvie();
+        pot = initNative();
     }
 
-    private void _play(String res, int mode) {
-        playNavite(pot, res, mode);
+    private void _setSoundResource(String res) {
+        setSoundResourcetNative(pot, res);
+    }
+
+    private void _setEffect(int mode) {
+        setEffectNative(pot, mode);
+    }
+
+    private void _play() {
+        playNative(pot);
         playing = true;
         if (listen != null) listen.onStart();
     }
 
-    private void _stop() {
-        stopNative(pot);
+    private void _pause() {
+        pauseNative(pot);
         playing = false;
-        if (listen != null) listen.onStop();
+        if (listen != null) listen.onPause();
     }
 
     private void _stopByCallback() {
         playing = false;
-        if (listen != null) listen.onStop();
+        if (listen != null) listen.onFinish();
     }
 
     private void _release() {
@@ -131,23 +174,29 @@ public class FmodPlay {
     }
 
 
-    native long initNatvie();
+    native long initNative();
 
-    native void playNavite(long pot, String res, int mode);
+    native void setSoundResourcetNative(long pot, String res);
 
-    native void stopNative(long pot);
+    native void setEffectNative(long pot, int mode);
+
+    native void playNative(long pot);
+
+    native void pauseNative(long pot);
 
     native void releaseNative(long pot);
 
     // call native
-    void playStopCallback() {
-        playHandler.sendEmptyMessage(sCodeStopCallback);
+    void playFinishCallback() {
+        playHandler.sendEmptyMessage(sCodeFinishCallback);
     }
 
-    interface FmodPlayListen {
+    public interface FmodPlayListen {
         void onStart();
 
-        void onStop();
+        void onPause();
+
+        void onFinish();
     }
 
 }

@@ -23,8 +23,9 @@ set_target_properties(fmodL
         ${lib_dir}/libfmodL.so)
 
 add_library(${CMAKE_PROJECT_NAME} SHARED
-        Fmodcore.cpp
-        FmodEffects.cpp)
+        FmodCore.cpp
+        FmodEffects.cpp
+        FmodPlayer.cpp)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
 
