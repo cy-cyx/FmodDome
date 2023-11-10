@@ -6,6 +6,8 @@ void FMODCORE::FmodPlayer::setEffect(int mode) {
         FMOD::DSP *tempDsp = dsp[i];
         channel->removeDSP(tempDsp);
     }
+    // 恢复一下正常速率
+    channel->setFrequency(normalFrequency);
     dspSize = 0;
 
     switch (mode) {

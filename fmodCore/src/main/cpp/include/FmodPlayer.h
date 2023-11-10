@@ -28,6 +28,10 @@ namespace FMODCORE {
         // 当前播放的声道
         FMOD::Channel *channel;
 
+        // 记住正常的速率
+        float normalFrequency;
+        float curFrequency;
+
         // dsp
         int dspMode;
 
@@ -50,7 +54,7 @@ namespace FMODCORE {
 
         void setSoundResource(JNIEnv *env, jobject thiz, jstring rec);
 
-        void setDspEffect(JNIEnv *env, jobject thiz,int mode);
+        void setDspEffect(JNIEnv *env, jobject thiz, int mode);
 
         void setEffect(int mode);
 

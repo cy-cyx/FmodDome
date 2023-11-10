@@ -104,6 +104,12 @@ void FMODCORE::FmodPlayer::play() {
                 FMOD::Channel *tempChannel;
                 system->playSound(sound, 0, false, &tempChannel);
                 channel = tempChannel;
+
+                // 记一下正常速率
+                float frequency = 0;
+                channel->getFrequency(&frequency);
+                normalFrequency = frequency;
+
                 // 把效果也设置上去
                 setEffect(dspMode);
             } else {
@@ -114,6 +120,12 @@ void FMODCORE::FmodPlayer::play() {
             FMOD::Channel *tempChannel;
             system->playSound(sound, 0, false, &tempChannel);
             channel = tempChannel;
+
+            // 记一下正常速率
+            float frequency = 0;
+            channel->getFrequency(&frequency);
+            normalFrequency = frequency;
+
             // 把效果也设置上去
             setEffect(dspMode);
         }
