@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fmod.R
 import com.fmod.base.BaseActivity
@@ -11,6 +13,8 @@ import com.fmod.databinding.ActivityEffectBinding
 import com.fmod.effect.adapter.EffectAdapter
 import com.fmod.units.noDoubleClick
 import com.fmodcore.FmodPlay
+import kotlinx.coroutines.launch
+import java.io.File
 
 class EffectActivity : BaseActivity<ActivityEffectBinding>() {
 
@@ -69,6 +73,19 @@ class EffectActivity : BaseActivity<ActivityEffectBinding>() {
         }
         effectAdapter.clickListen = {
             fmodPlay.setEffect(it.effectMode.mode)
+        }
+
+        viewBinding.saveTv.noDoubleClick {
+            if (fmodPlay.isPlay) {
+                fmodPlay.pause()
+            }
+            val fileName = "${cacheDir?.absolutePath}/save_${System.currentTimeMillis()}.wav"
+            File(fileName).createNewFile()
+            fmodPlay.save(fileName) {
+                lifecycleScope.launch {
+                    Toast.makeText(this@EffectActivity, "success", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

@@ -87,6 +87,16 @@ public class FmodPlay {
         listen = null;
     }
 
+    public void save(String savePath, FmodPlaySaveListen listen) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                saveNative(pot, savePath);
+                listen.onFinish();
+            }
+        }).start();
+    }
+
     private final int sCodeInit = 0;
     private final int sCodeSetRes = 1;
     private final int sCodeSetEffect = 2;
@@ -186,6 +196,8 @@ public class FmodPlay {
 
     native void releaseNative(long pot);
 
+    native void saveNative(long pot, String savePath);
+
     // call native
     void playFinishCallback() {
         playHandler.sendEmptyMessage(sCodeFinishCallback);
@@ -199,4 +211,7 @@ public class FmodPlay {
         void onFinish();
     }
 
+    public interface FmodPlaySaveListen {
+        void onFinish();
+    }
 }

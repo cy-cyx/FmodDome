@@ -24,6 +24,7 @@ namespace FMODCORE {
 
         // 当前音乐文件资源
         FMOD::Sound *sound;
+        const char *soundPath;
 
         // 当前播放的声道
         FMOD::Channel *channel;
@@ -56,16 +57,20 @@ namespace FMODCORE {
 
         void setDspEffect(JNIEnv *env, jobject thiz, int mode);
 
-        void setEffect(int mode);
+        void cleanEffect();
 
         void play();
 
         void pause();
 
+        void save(JNIEnv *env, jobject thiz, jstring savePath);
+
         void release(JNIEnv *env, jobject thiz);
-
-
     };
+
+    void setEffect(FMOD::System *targetSystem, FMOD::Channel *targetChannel,
+                   FMOD::DSP **targetDsp, int *targetDspSize,
+                   int mode);
 }
 
 #endif //FMOD_FMODTASK_H

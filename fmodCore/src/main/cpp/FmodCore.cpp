@@ -6,38 +6,43 @@
 #include "Log.h"
 #include "fmod/fmod_errors.h"
 
- JavaVM *javaVm;
+JavaVM *javaVm;
 
 jlong _init(JNIEnv *env, jobject thiz) {
-    auto *task = new FMODCORE::FmodPlayer();
-    task->init(env, thiz);
-    return (long) task;
+    auto *player = new FMODCORE::FmodPlayer();
+    player->init(env, thiz);
+    return (long) player;
 }
 
 void _setSoundResource(JNIEnv *env, jobject thiz, jlong p, jstring rec) {
-    auto *task = (FMODCORE::FmodPlayer *) p;
-    task->setSoundResource(env, thiz, rec);
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    player->setSoundResource(env, thiz, rec);
 }
 
 void _setEffect(JNIEnv *env, jobject thiz, jlong p, int mode) {
-    auto *task = (FMODCORE::FmodPlayer *) p;
-    task->setDspEffect(env, thiz, mode);
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    player->setDspEffect(env, thiz, mode);
 }
 
 void _play(JNIEnv *env, jobject thiz, jlong p) {
-    auto *task = (FMODCORE::FmodPlayer *) p;
-    task->play();
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    player->play();
 }
 
 void _pause(JNIEnv *env, jobject thiz, jlong p) {
-    auto *task = (FMODCORE::FmodPlayer *) p;
-    task->pause();
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    player->pause();
 }
 
 void _release(JNIEnv *env, jobject thiz, jlong p) {
-    auto *task = (FMODCORE::FmodPlayer *) p;
-    if (nullptr == task)return;
-    task->release(env, thiz);
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    if (nullptr == player)return;
+    player->release(env, thiz);
+}
+
+void _save(JNIEnv *env, jobject thiz, jlong p, jstring savePath) {
+    auto *player = (FMODCORE::FmodPlayer *) p;
+    player->save(env, thiz, savePath);
 }
 
 int registerNativeMethods(JNIEnv *env) {
@@ -49,6 +54,7 @@ int registerNativeMethods(JNIEnv *env) {
             {"playNative",              "(J)V",                   (void *) _play},
             {"pauseNative",             "(J)V",                   (void *) _pause},
             {"releaseNative",           "(J)V",                   (void *) _release},
+            {"saveNative",              "(JLjava/lang/String;)V", (void *) _save},
     };
 
     const char *className = "com/fmodcore/FmodPlay";

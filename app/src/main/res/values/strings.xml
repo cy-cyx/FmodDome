@@ -21,4 +21,5 @@
     <string name="old_radio">Old Radio</string>
     <string name="voice_effect">Voice Effect</string>
     <string name="change_voice">Change voice</string>
+    <string name="save">Save</string>
 </resources>

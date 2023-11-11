@@ -76,17 +76,30 @@ void FMODCORE::FmodPlayer::setSoundResource(JNIEnv *env, jobject thiz, jstring r
         LOGV("fmod", "createSound result: %s", FMOD_ErrorString(result));
 
         sound = tempSound;
+        soundPath = path;
         LOGV("fmod", "resource ready!");
     } catch (...) {
     }
 }
 
+void FMODCORE::FmodPlayer::cleanEffect() {
+    //  清掉久的效果
+    for (int i = 0; i < dspSize; ++i) {
+        FMOD::DSP *tempDsp = dsp[i];
+        channel->removeDSP(tempDsp);
+    }
+    // 恢复一下正常速率
+    channel->setFrequency(normalFrequency);
+    dspSize = 0;
+}
+
 void FMODCORE::FmodPlayer::setDspEffect(JNIEnv *env, jobject thiz, int mode) {
+    cleanEffect();
     try {
         dspMode = mode;
 
         if (nullptr != channel) {
-            setEffect(mode);
+            setEffect(system, channel, dsp, &dspSize, mode);
         }
     } catch (...) {
     }
@@ -114,7 +127,7 @@ void FMODCORE::FmodPlayer::play() {
                 normalFrequency = frequency;
 
                 // 把效果也设置上去
-                setEffect(dspMode);
+                setEffect(system, channel, dsp, &dspSize, dspMode);
             } else {
                 channel->setPaused(false);
             }
@@ -130,7 +143,7 @@ void FMODCORE::FmodPlayer::play() {
             normalFrequency = frequency;
 
             // 把效果也设置上去
-            setEffect(dspMode);
+            setEffect(system, channel, dsp, &dspSize, dspMode);
         }
 
         isFinish = false;
@@ -162,4 +175,36 @@ void FMODCORE::FmodPlayer::release(JNIEnv *env, jobject thiz) {
         env->DeleteGlobalRef(object);
     } catch (...) {
     }
+}
+
+void FMODCORE::FmodPlayer::save(JNIEnv *env, jobject thiz, jstring savePath) {
+    char dest[1000];
+    const char *path = env->GetStringUTFChars(savePath, 0);
+    strcpy(dest, path);
+
+    FMOD::System *saveSystem;
+    System_Create(&saveSystem);
+    saveSystem->setSoftwareFormat(8000, FMOD_SPEAKERMODE_MONO, 0);
+    saveSystem->setOutput(FMOD_OUTPUTTYPE_WAVWRITER);
+    saveSystem->init(2, FMOD_INIT_NORMAL, dest);
+
+    FMOD::Sound *saveSound;
+    saveSystem->createSound(soundPath, FMOD_DEFAULT, 0, &saveSound);
+
+    FMOD::Channel *saveChannel;
+    saveSystem->playSound(saveSound, 0, false, &saveChannel);
+
+    FMOD::DSP *saveDsp[5];
+    int saveDspSize;
+    setEffect(saveSystem, saveChannel, saveDsp, &saveDspSize, dspMode);
+
+    bool playing = true;
+    while (playing) {
+        usleep(1000);
+        saveChannel->isPlaying(&playing);
+    }
+
+    saveSound->release();
+    saveSystem->close();
+    saveSystem->release();
 }
