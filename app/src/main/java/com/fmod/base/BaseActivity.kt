@@ -46,6 +46,6 @@ abstract class BaseActivity<T : ViewBinding> : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         PermissionUtil.onActivityResult(this, requestCode, resultCode, data)
-        SystemSoundUtil.onActivityResult(this, requestCode, resultCode, data, null)
+        SystemSoundUtil.onActivityResult(this, requestCode, resultCode, data)
     }
 }

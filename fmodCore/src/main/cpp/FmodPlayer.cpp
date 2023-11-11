@@ -1,4 +1,5 @@
 #include "FmodPlayer.h"
+#include "fmod/fmod_errors.h"
 
 // 循环检查结束
 void *checkChannelState(void *arg) {
@@ -71,7 +72,9 @@ void FMODCORE::FmodPlayer::setSoundResource(JNIEnv *env, jobject thiz, jstring r
         }
         FMOD::Sound *tempSound;
         const char *path = env->GetStringUTFChars(rec, 0);
-        system->createSound(path, FMOD_DEFAULT, 0, &tempSound);
+        FMOD_RESULT result = system->createSound(path, FMOD_DEFAULT, 0, &tempSound);
+        LOGV("fmod", "createSound result: %s", FMOD_ErrorString(result));
+
         sound = tempSound;
         LOGV("fmod", "resource ready!");
     } catch (...) {
@@ -148,7 +151,7 @@ void FMODCORE::FmodPlayer::pause() {
 void FMODCORE::FmodPlayer::release(JNIEnv *env, jobject thiz) {
     try {
         isRelease = true;
-       isFinish = true;
+        isFinish = true;
         if (nullptr != sound) {
             sound->release();
         }

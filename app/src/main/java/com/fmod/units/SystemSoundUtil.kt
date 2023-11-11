@@ -21,8 +21,7 @@ object SystemSoundUtil {
         context: Activity,
         requestCode: Int,
         resultCode: Int,
-        data: Intent?,
-        nothing: Nothing?
+        data: Intent?
     ) {
         when (requestCode) {
             SELECT_IMAGE_REQUEST_CODE -> {
@@ -30,7 +29,6 @@ object SystemSoundUtil {
                     val path = PickUtils.getPath(context, data?.data)
                     callback?.invoke(path)
                 }
-                callback = nothing
             }
         }
     }
