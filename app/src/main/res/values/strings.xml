@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fmod</string>
+    <string name="app_name">Voice Changer</string>
     <string name="permission_refuse_tip">Please go to the settings page to open the relevant permissions</string>
     <string name="goto_set">Go To Set</string>
 
@@ -22,4 +22,12 @@
     <string name="voice_effect">Voice Effect</string>
     <string name="change_voice">Change voice</string>
     <string name="save">Save</string>
+    <string name="tap_to_start_recording">Tap to start recording</string>
+    <string name="storage_place">Storage place</string>
+    <string name="file_name">File Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="success">Success</string>
+    <string name="saving">Saving…</string>
+    <string name="my_work">My Work</string>
+    <string name="all_folder">All folder</string>
 </resources>

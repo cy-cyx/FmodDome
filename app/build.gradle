@@ -16,8 +16,14 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,6 +36,11 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    packagingOptions {
+        exclude("**/*.kotlin_builtins")
+        exclude("**/*.kotlin_module")
+        exclude("**/DebugProbesKt.bin")
     }
 }
 
@@ -44,4 +55,5 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "com.tencent:mmkv-static:$mmkv_version"
     implementation "org.greenrobot:eventbus:$eventbus_version"
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }

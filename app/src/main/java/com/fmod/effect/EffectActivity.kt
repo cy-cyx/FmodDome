@@ -11,6 +11,9 @@ import com.fmod.R
 import com.fmod.base.BaseActivity
 import com.fmod.databinding.ActivityEffectBinding
 import com.fmod.effect.adapter.EffectAdapter
+import com.fmod.effect.dialog.LoadingDialog
+import com.fmod.effect.dialog.SaveDialog
+import com.fmod.units.FileUtil
 import com.fmod.units.noDoubleClick
 import com.fmodcore.FmodPlay
 import kotlinx.coroutines.launch
@@ -36,6 +39,7 @@ class EffectActivity : BaseActivity<ActivityEffectBinding>() {
     }
 
     private val effectAdapter = EffectAdapter()
+    private val loadingDialog by lazy { LoadingDialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +56,17 @@ class EffectActivity : BaseActivity<ActivityEffectBinding>() {
         fmodPlay.setListen(object : FmodPlay.FmodPlayListen {
             override fun onStart() {
                 viewBinding.playIv.setImageResource(R.drawable.ic_pause)
+                viewBinding.playAnimLv.playAnimation()
             }
 
             override fun onPause() {
                 viewBinding.playIv.setImageResource(R.drawable.ic_play)
+                viewBinding.playAnimLv.pauseAnimation()
             }
 
             override fun onFinish() {
                 viewBinding.playIv.setImageResource(R.drawable.ic_play)
+                viewBinding.playAnimLv.pauseAnimation()
             }
 
         })
@@ -79,13 +86,31 @@ class EffectActivity : BaseActivity<ActivityEffectBinding>() {
             if (fmodPlay.isPlay) {
                 fmodPlay.pause()
             }
-            val fileName = "${cacheDir?.absolutePath}/save_${System.currentTimeMillis()}.wav"
-            File(fileName).createNewFile()
-            fmodPlay.save(fileName) {
-                lifecycleScope.launch {
-                    Toast.makeText(this@EffectActivity, "success", Toast.LENGTH_SHORT).show()
+
+            SaveDialog(this).apply {
+                confirmListen = {
+                    loadingDialog.show()
+                    val filePath = "${cacheDir?.absolutePath}/${it}.wav"
+                    File(filePath).createNewFile()
+                    fmodPlay.save(filePath) {
+                        FileUtil.copyPrivateToAudio(this@EffectActivity, filePath, "${it}.wav")
+                        lifecycleScope.launch {
+                            loadingDialog.dismiss()
+                            Toast.makeText(
+                                this@EffectActivity,
+                                R.string.success,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
-            }
+            }.show()
+
+
+        }
+
+        viewBinding.backIv.noDoubleClick {
+            finish()
         }
     }
 

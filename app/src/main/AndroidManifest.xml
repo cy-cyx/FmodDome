@@ -19,7 +19,7 @@
         android:theme="@style/Theme.Fmod"
         tools:targetApi="31">
         <activity
-            android:name=".main.MainActivity"
+            android:name=".splash.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Fmod">
             <intent-filter>
@@ -28,7 +28,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.fmod.main.MainActivity" />
         <activity android:name="com.fmod.effect.EffectActivity" />
+        <activity android:name="com.fmod.mywork.MyWorkActivity" />
+
+        <provider
+            android:name="com.fmod.units.MyFileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
+
 
 </manifest>

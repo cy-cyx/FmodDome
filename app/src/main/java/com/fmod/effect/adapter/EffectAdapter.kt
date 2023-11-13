@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.fmod.base.BaseViewHolder
 import com.fmod.data.DspEffectRepository
 import com.fmod.databinding.ItemEffectBinding
+import com.fmod.units.gone
 import com.fmod.units.noDoubleClick
+import com.fmod.units.visible
 
 class EffectAdapter : RecyclerView.Adapter<ViewHolder>() {
 
@@ -37,6 +39,12 @@ class EffectAdapter : RecyclerView.Adapter<ViewHolder>() {
         fun bind(effect: DspEffectRepository.DspEffect) {
             viewBinding.logoIv.setImageResource(effect.logo)
             viewBinding.nameTv.setText(effect.name)
+
+            if (effect.id == id) {
+                viewBinding.tickIv.visible()
+            } else {
+                viewBinding.tickIv.gone()
+            }
 
             viewBinding.root.noDoubleClick {
                 clickListen?.invoke(effect)

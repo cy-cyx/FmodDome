@@ -1,6 +1,7 @@
 package com.fmod.main
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.media.MediaRecorder
 import android.os.Build
@@ -10,15 +11,24 @@ import com.fmod.R
 import com.fmod.base.BaseActivity
 import com.fmod.databinding.ActivityMainBinding
 import com.fmod.effect.EffectActivity
+import com.fmod.mywork.MyWorkActivity
 import com.fmod.record.AudioRecordWav
 import com.fmod.units.PermissionUtil
 import com.fmod.units.SystemSoundUtil
+import com.fmod.units.gone
 import com.fmod.units.noDoubleClick
+import com.fmod.units.visible
 import com.fmodcore.EffectMode
 import com.fmodcore.FmodPlay
 import java.io.IOException
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }
+    }
 
     override fun initViewBinding(layoutInflater: LayoutInflater): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
@@ -62,6 +72,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 stopRecord()
             }
         }
+        viewBinding.myWorkIv.noDoubleClick {
+            MyWorkActivity.start(this)
+        }
     }
 
     private var fileName = ""
@@ -97,6 +110,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
                     isStartRecord = true
                     viewBinding.recordIv.setImageResource(R.drawable.ic_stop_record)
+                    viewBinding.tipTv.gone()
+                    viewBinding.recordingLv.visible()
                 }
             })
 
@@ -107,5 +122,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         isStartRecord = false
         viewBinding.recordIv.setImageResource(R.drawable.ic_record)
+        viewBinding.tipTv.visible()
+        viewBinding.recordingLv.gone()
     }
 }

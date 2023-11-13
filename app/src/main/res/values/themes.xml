@@ -2,4 +2,13 @@
 <resources>
 
     <style name="Theme.Fmod" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+
+    <style name="Theme.translucentDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <!--透明背景-->
+        <item name="android:background">@android:color/transparent</item>
+        <!--窗口背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!---->
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>
